@@ -1,0 +1,52 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head :: head">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <title>OCAFE</title>
+</head>
+<body>
+<header id="header">
+    <div th:replace="fragments/navbar.html :: menu"></div>
+</header>
+<div class="container" id="home">
+    <div class="content">
+        <div class="container-row">
+            <h1 class="title">
+                <strong>
+                    Home
+                </strong>
+            </h1>
+            <br>
+            <h2 class="is-size-5">
+                <strong>
+                    <span th:utext="${homeUserName}"></span>
+                </strong>
+            </h2>
+            <br>
+            <div class="columns is-mobile">
+                <div class="column">
+                    <p>Welcome to OCAFE, Student Administration System</p>
+                </div>
+            </div>
+            <div class="column">
+                <p>The system has the following options available: </p>
+                <ul>
+                    <li>Student:</li>
+                    <p>Add, delete, edit and view all students.
+                    Please use desktop version to edit/delete</p>
+                    <li>Admin Menu(must have access)</li>
+                </ul>
+                <br>
+            </div>
+            <div class="column">
+                <h3 class="is-size-4"></h3>
+                <p>For troubleshooting, user problems etc. please contact administrator</p>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer" th:insert="fragments/footer :: footer">
+</footer>
+</body>
+</html>

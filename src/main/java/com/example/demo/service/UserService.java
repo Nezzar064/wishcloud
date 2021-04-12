@@ -6,6 +6,8 @@ import com.example.demo.models.User;
 import com.example.demo.repositories.RoleRepository;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +29,9 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public User findUserByEmail(long id) {
-        return userRepository.findById(id);
+    public User findUserByUsernameWithRole() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return findUserByUsername(auth.getName());
     }
 
     public User findUserByUsername(String userName){
