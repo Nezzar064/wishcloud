@@ -24,7 +24,6 @@ public class WishController {
         this.wishService = wishService;
     }
 
-
     @RequestMapping(value="/addWish", method = RequestMethod.GET)
     public ModelAndView makeAwish() {
         ModelAndView modelAndView = new ModelAndView();
@@ -33,6 +32,7 @@ public class WishController {
         modelAndView.setViewName("addAwish");
         return modelAndView;
     }
+
 
     //FIND A WAY IN WHICH YOU GET THE CURRENT LOGGED IN USERS ID WHEN YOU PRESS "ADD A WISH" BUTTON!
     //doesnt work atm, requestmethod get not supported?
