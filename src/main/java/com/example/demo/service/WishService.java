@@ -27,16 +27,9 @@ public class WishService {
     }
 
     //MAKE SURE ID GOES THROUGH!
-    public Wish createWish(Wish wish, String name) {
-        List<Wishlist> wishlists = wishlistService.getAllForUser();
-        Wishlist foundWishlist = new Wishlist();
-        for (int i = 0; i < wishlists.size(); i++) {
-            if (wishlists.get(i).getWishlist_name().equals(name)) {
-                foundWishlist = wishlists.get(i);
-            }
-        }
+    public Wish createWish(Wish wish, Wishlist wishlist) {
         User user = userRepository.findById(getUserId());
-        wish.setWishlist(foundWishlist);
+        wish.setWishlist(wishlist);
         wish.setUser(user);
         return wishRepository.save(wish);
     }

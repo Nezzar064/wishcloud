@@ -14,11 +14,11 @@ public class Wish {
     @Column(name = "wish_id")
     private long id;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "wishlist_id")
     private Wishlist wishlist;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

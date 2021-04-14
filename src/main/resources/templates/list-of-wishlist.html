@@ -42,6 +42,8 @@
                                             <!-- insert wishes data here -->
                                             <td><a th:href="@{/wishlists/{wishlist_name}(wishlist_name=${wishlists.wishlist_name})/list}"
                                                    class="button is-primary is-small">Your wishes</a></td>
+                                            <td><a th:href="@{/wishlists/{wishlist_name}(wishlist_name=${wishlists.wishlist_name})/createWish}"
+                                                   class="button is-primary is-small">Add Wish</a></td>
                                             <td><a th:href="@{/wishlists/delete/{id}(id=${wishlists.id})}"
                                                    onclick="confirm_delete_user()" class="button is-danger is-small">Delete</a></td>
                                             <!-- insert share here -->

@@ -76,12 +76,12 @@ public class WishlistController {
     @PostMapping(value = "{current_wishlist}/addWish")
     public ModelAndView createNewWish(@Valid Wish wish, BindingResult bindingResult, @PathVariable (value = "current_wishlist") String wishListName) {
         ModelAndView modelAndView = new ModelAndView();
-
         modelAndView.addObject("wishlist_name", wishListName);
+        Wishlist wishlist = wishlistService.findWishlistByName(wishListName);
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("add-wish");
         } else {
-            wishService.createWish(wish, wishListName);
+            wishService.createWish(wish, wishlist);
             modelAndView.addObject("successMessage", "Wish has been registered successfully!");
             modelAndView.addObject("wish", new Wish());
             modelAndView.setViewName("add-wish");
