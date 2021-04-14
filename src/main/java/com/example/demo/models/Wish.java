@@ -1,15 +1,22 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "wishes")
 public class Wish {
 
+    //ADD ERRORS LIKE USER!
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "wish_id")
     private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "wishlist_id")
+    private Wishlist wishlist;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -22,6 +29,14 @@ public class Wish {
     private String price;
 
     public Wish() {
+    }
+
+    public Wishlist getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(Wishlist wishlist) {
+        this.wishlist = wishlist;
     }
 
     public long getId() {

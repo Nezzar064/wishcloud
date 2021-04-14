@@ -12,7 +12,8 @@
             <br>
             <div class="columns is-mobile">
                 <div class="col-md-6 col-md-offset-3">
-                    <form action="#" th:action="@{/addAwish{user_id}}"
+
+                    <form action="#" th:action="@{/wishlists/{current_wishlist}/addWish}"
                           th:object="${wish}" method="post" class="form-horizontal"
                           role="form">
                         <div class="form-group">

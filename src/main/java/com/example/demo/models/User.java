@@ -41,17 +41,21 @@ public class User {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
-    private List<Wish> wishes;
+    private List<Wishlist> wishlists;
 
     public User() {
     }
 
-    public List<Wish> getWishes() {
-        return wishes;
+    public long getId() {
+        return id;
     }
 
-    public void setWishes(List<Wish> wishes) {
-        this.wishes = wishes;
+    public List<Wishlist> getWishlists() {
+        return wishlists;
+    }
+
+    public void setWishlists(List<Wishlist> wishlists) {
+        this.wishlists = wishlists;
     }
 
     public void setRoles(Set<Role> roles) {

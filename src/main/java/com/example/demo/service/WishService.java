@@ -2,9 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.models.User;
 import com.example.demo.models.Wish;
+import com.example.demo.models.Wishlist;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.WishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,21 +17,43 @@ public class WishService {
 
     private WishRepository wishRepository;
     private UserRepository userRepository;
+    private WishlistService wishlistService;
 
     @Autowired
-    public WishService(WishRepository wishRepository, UserRepository userRepository) {
+    public WishService(WishRepository wishRepository, UserRepository userRepository, WishlistService wishlistService) {
         this.wishRepository = wishRepository;
         this.userRepository = userRepository;
+        this.wishlistService = wishlistService;
     }
 
     //MAKE SURE ID GOES THROUGH!
-    public Wish createWish(Wish wish, long userId) {
-        User user = userRepository.findById(userId);
+    public Wish createWish(Wish wish, String name) {
+        List<Wishlist> wishlists = wishlistService.getAllForUser();
+        Wishlist foundWishlist = new Wishlist();
+        for (int i = 0; i < wishlists.size(); i++) {
+            if (wishlists.get(i).getWishlist_name().equals(name)) {
+                foundWishlist = wishlists.get(i);
+            }
+        }
+        User user = userRepository.findById(getUserId());
+        wish.setWishlist(foundWishlist);
         wish.setUser(user);
         return wishRepository.save(wish);
     }
 
-    public List<Wish> getAllWishesForUserId(long userId) {
-        return wishRepository.findByUserId(userId);
+    public List<Wish> getAllWishesForUserId() {
+        return wishRepository.findByUserId(getUserId());
     }
+
+    public void deleteWish(Wish wish) {
+        wishRepository.delete(wish);
+    }
+
+    private long getUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentLoggedInUser = authentication.getName();
+        return userRepository.findByUsername(currentLoggedInUser).getId();
+    }
+
+    //DELETE WISH FUNCTION
 }

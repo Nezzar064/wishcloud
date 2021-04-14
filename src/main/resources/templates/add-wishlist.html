@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head :: head">
+    <title>Create Wishlist</title>
+</head>
+<body>
+<header id="header">
+    <div th:replace="fragments/navbar.html :: menu"></div>
+</header>
+<div class="container">
+    <div class="content">
+        <div class="container-row">
+            <h2 class="title is-4"><strong>Create Wishlist</strong></h2>
+            <br>
+            <div class="columns is-mobile">
+                <div class="col-md-6 col-md-offset-3">
+                    <form autocomplete="off" action="#" th:action="@{/wishlists/addWishlist}"
+                          th:object="${wishlist}" method="post" class="form-horizontal"
+                          role="form">
+                        <div class="form-group">
+                            <div class="column">
+                                <label for="name" class="label"></label>
+                                <strong>
+                                    <input style="color:black" type="text" th:field="*{wishlist_name}" placeholder="Name"
+                                           class="input is-normal" id="name"/> </strong>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="column">
+                                <button type="submit" class="button is-success">Create wishlist</button>
+                                <a href="/wishlists/list" class="button is-primary">Go back</a>
+                            </div>
+                        </div>
+                        <h2 class="title is-4"><span class="text-success" th:utext="${successMessage}"></span></h2>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer" th:insert="fragments/footer :: footer">
+</footer>
+</body>
+</html>
