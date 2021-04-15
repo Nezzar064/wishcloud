@@ -28,7 +28,6 @@ public class WishlistService {
         this.wishRepository = wishRepository;
     }
 
-    //TODO: fix loop here - wrong logic
     public List<Wishlist> getAllForUser() {
         List<Wishlist> fullList = wishlistRepository.findAll();
         List<Wishlist> usersList = new ArrayList<>();
@@ -52,7 +51,7 @@ public class WishlistService {
 
     public void deleteWishlist(long id) {
         Wishlist wishlist = wishlistRepository.findById(id);
-        Wish wish = wishRepository.findByWishlistId(id);
+        Wish wish = wishRepository.findSingleByWishlistId(id);
         wishlist.getWishes().remove(wish);
         wishlistRepository.delete(wishlist);
     }

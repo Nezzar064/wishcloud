@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
@@ -90,34 +89,27 @@ public class WishlistController {
 
     }
 
-    //TODO: FIX GETTING WISHLIST NAME
     @GetMapping(value = "itemList/{wishlistId}")
     public String showWishes(Model model, @PathVariable(value = "wishlistId") long wishlistId) {
         model.addAttribute("currentWishlist", wishlistService.findWishlistById(wishlistId));
-        String wishlistName = wishlistService.findWishlistById(wishlistId).getWishlistName();
-        model.addAttribute("wishlistName", wishlistName);
         model.addAttribute(wishlistService.findWishlistById(wishlistId));
-        model.addAttribute("wishes", wishService.getAllWishesForUserId());
+        model.addAttribute("wishes", wishService.getAllWishesForWishlistId(wishlistId));
         return "list-of-wishes";
     }
 
-    //TODO: DOESNT WORK, make it like the wishlist one that works.
     @GetMapping(value = "deleteWish/{id}")
     public String deleteWish(@PathVariable("id") long id, Model model) {
-        wishlistService.deleteWishlist(id);
-        model.addAttribute("wishlists", wishlistService.getAllForUser());
-        //TODO FIX
-        return "redirect:/wishlists/itemList";
+        Long wishlistId = wishService.findWishlistIdByWishId(id);
+        try {
+            model.addAttribute("wish", wishService.getAllWishesForWishlistId(id));
+            wishService.deleteWish(id);
+            return "redirect:/wishlists/itemList/" + wishlistId;
+        } catch (Exception e) {
+            return "redirect:/wishlists/itemList/" + wishlistId;
+        }
     }
 
-    /*
-    private Wishlist getWishlistName() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    //MAKE SHARE BUTTON, maybe just add a sharing link that refers to wishlists/share/ID??
 
 
-     */
-
-
-
-    //MAKE SHARE BUTTON
 }

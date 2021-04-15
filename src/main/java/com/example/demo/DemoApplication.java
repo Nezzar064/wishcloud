@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableJpaAuditing
 
 public class DemoApplication {
-
+    //TODO: Fix in-line styling in add-wish?
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }

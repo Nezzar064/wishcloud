@@ -4,7 +4,7 @@
     color: #FF1C19;
 }
 
-#name, #lastName, #username, #password, #address, #Address, #birthDate, #phone, #program{
+#name, #lastName, #username, #password, #nameOfItem, #priceOfItem, #link{
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
     border-color: black;
 }

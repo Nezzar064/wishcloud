@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 @Table(name = "wishes")
 public class Wish {
-    //TODO: ADD DTO OBJECTS PLEASE!!! NO MORE QUERY ALL THE TIME
+    //TODO: ADD DTO OBJECTS PLEASE!!! NO MORE QUERY ALL THE TIME. For help see StudentAdminWDB
     //ADD ERRORS LIKE USER!
 
     @Id
@@ -14,19 +14,21 @@ public class Wish {
     @Column(name = "wish_id")
     private long id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name = "wishlist_id")
     private Wishlist wishlist;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "item_name")
+    private String itemName;
 
     @Column(name = "link")
     private String link;
 
     @Column(name = "price")
     private String price;
+
+    @Column(name = "reserved")
+    private Boolean reserved;
 
     public Wish() {
     }
@@ -47,12 +49,20 @@ public class Wish {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Boolean getReserved() {
+        return reserved;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setReserved(Boolean reserved) {
+        this.reserved = reserved;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getLink() {

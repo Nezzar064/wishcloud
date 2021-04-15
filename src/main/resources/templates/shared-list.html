@@ -15,7 +15,7 @@
         <div class="container-row">
             <h2 class="title is-4">
                 <strong>
-                    <span th:text="${currentWishlist.wishlistName}"></span>
+                    <span th:utext="wishlistName"></span>
                 </strong>
             </h2>
             <br>
@@ -32,21 +32,20 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th>Name</th>
                                             <th>Link</th>
                                             <th>Price</th>
-                                            <th>Reserved?</th>
                                             <th>Delete</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="wish : ${wishes}">
-                                            <td th:text="${wish.itemName}"></td>
                                             <td th:text="${wish.link}"></td>
                                             <td th:text="${wish.price}"></td>
-                                            <td th:text="${wish.reserved}"></td>
+                                            <!-- insert wishes data here -->
                                             <td><a th:href="@{/wishlists/deleteWish/{id}(id=${wish.id})}"
-                                                   onclick="confirm_delete_wish()" class="button is-danger is-small">Delete</a></td>
+                                                   onclick="confirm_delete_user()" class="button is-danger is-small">Delete</a></td>
+                                            <!-- https://stackoverflow.com/questions/61045504/thymeleaf-how-to-hide-element-based-on-boolean-parametr for reservewish
+                                            add a confirm reserve as well-->
                                         </tr>
                                         </tbody>
                                     </table>
@@ -66,8 +65,8 @@
 </footer>
 </body>
 <script type="text/javascript">
-    function confirm_delete_wish() {
-        return confirm("Delete wish?")
+    function confirm_delete_user() {
+        return confirm("Delete wishlist?")
     }
 </script>
 </html>
