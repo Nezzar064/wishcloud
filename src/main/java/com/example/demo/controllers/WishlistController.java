@@ -5,6 +5,8 @@ import com.example.demo.models.Wishlist;
 import com.example.demo.service.WishService;
 import com.example.demo.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/wishlists/")
+@RequestMapping(value = "/wishlists/")
 public class WishlistController {
 
     private WishlistService wishlistService;
@@ -27,83 +29,93 @@ public class WishlistController {
     }
 
     //WISHLISTS
-    @GetMapping("createWishlist")
+    @GetMapping(value ="createWishlist")
     public String showWishlistForm(Wishlist wishlist) {
         return "add-wishlist";
     }
 
     @PostMapping(value = "addWishlist")
-    public ModelAndView createNewWish(@Valid Wishlist wishlist, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
+    public String createNewWish(@Valid Wishlist wishlist, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("add-wishlist");
-        } else {
-            wishlistService.createWishlist(wishlist);
-            modelAndView.addObject("successMessage", "Wishlist has been registered successfully!");
-            modelAndView.addObject("wishlist", new Wishlist());
-            modelAndView.setViewName("add-wishlist");
-
+            return "add-wishlist";
         }
-        return modelAndView;
+        model.addAttribute("successMessage", "Wishlist has been registered successfully!");
+        model.addAttribute("wishlist", wishlist);
+        wishlistService.createWishlist(wishlist);
+        return "redirect:/wishlists/lists";
+
+
     }
 
-    @GetMapping("list")
+    @GetMapping(value = "lists")
     public String showWishlists(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("listUserName","Greetings " + auth.getName());
         model.addAttribute("wishlist", wishlistService.getAllForUser());
         return "list-of-wishlist";
     }
 
-    @GetMapping("delete/{id}")
+    //Needs fix for getting wishes as well and deleting them
+    @GetMapping(value = "delete/{id}")
     public String deleteWishlist(@PathVariable("id") long id, Model model) {
-        Wishlist wishlist = wishlistService.findWishlistById(id);
-        wishlistService.deleteWishlist(wishlist);
-        model.addAttribute("wishlists", wishlistService.getAllForUser());
-        return "redirect:/wishlists/list";
+        try {
+            wishlistService.deleteWishlist(id);
+            model.addAttribute("wishlists", wishlistService.getAllForUser());
+            return "redirect:/wishlists/lists";
+        } catch (Exception e) {
+            return "redirect:/wishlists/lists";
+        }
     }
 
     //WISHES
-    // FIX GETTING WISHLIST WHEN SAVING
-    @GetMapping(value="{current_wishlist}/createWish")
-    public ModelAndView makeAwish(@PathVariable (value = "current_wishlist") String wishListName) {
-        ModelAndView modelAndView = new ModelAndView();
+    @GetMapping(value = "createWish/{wishlistId}")
+    public String makeAwish(@PathVariable(value = "wishlistId") long wishlistId, Model model) {
         Wish wish = new Wish();
-        modelAndView.addObject("wishlist_name", wishListName);
-        modelAndView.addObject("wish", wish);
-        modelAndView.setViewName("add-wish");
-        return modelAndView;
+        model.addAttribute("currentWishlist", wishlistService.findWishlistById(wishlistId));
+        model.addAttribute("wish", wish);
+        return "add-wish";
     }
 
-    @PostMapping(value = "{current_wishlist}/addWish")
-    public ModelAndView createNewWish(@Valid Wish wish, BindingResult bindingResult, @PathVariable (value = "current_wishlist") String wishListName) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("wishlist_name", wishListName);
-        Wishlist wishlist = wishlistService.findWishlistByName(wishListName);
+    @RequestMapping(value = "addWish/{wishlistId}", method = {RequestMethod.GET, RequestMethod.POST})
+    public String createNewWish(@Valid Wish wish, BindingResult bindingResult, @PathVariable(value = "wishlistId") long wishlistId, Model model) {
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("add-wish");
-        } else {
-            wishService.createWish(wish, wishlist);
-            modelAndView.addObject("successMessage", "Wish has been registered successfully!");
-            modelAndView.addObject("wish", new Wish());
-            modelAndView.setViewName("add-wish");
-
+            return "add-wish";
         }
-        return modelAndView;
+        model.addAttribute("currentWishlist", wishlistService.findWishlistById(wishlistId));
+        model.addAttribute("successMessage", "Wish has been registered successfully!");
+        model.addAttribute("wish", wish);
+        wishService.createWish(wish, wishlistId);
+        return "add-wish";
+
+
     }
 
-    @GetMapping("{current_wishlist}/list")
-    public String showWishes(Model model, @PathVariable (value = "current_wishlist") String wishListName) {
-        model.addAttribute("wishlist_name", wishListName);
+    //TODO: FIX GETTING WISHLIST NAME
+    @GetMapping(value = "itemList/{wishlistId}")
+    public String showWishes(Model model, @PathVariable(value = "wishlistId") long wishlistId) {
+        model.addAttribute("currentWishlist", wishlistService.findWishlistById(wishlistId));
+        String wishlistName = wishlistService.findWishlistById(wishlistId).getWishlistName();
+        model.addAttribute("wishlistName", wishlistName);
+        model.addAttribute(wishlistService.findWishlistById(wishlistId));
         model.addAttribute("wishes", wishService.getAllWishesForUserId());
         return "list-of-wishes";
     }
 
-    @GetMapping("deleteWish/{id}")
+    //TODO: DOESNT WORK, make it like the wishlist one that works.
+    @GetMapping(value = "deleteWish/{id}")
     public String deleteWish(@PathVariable("id") long id, Model model) {
-        Wishlist wishlist = wishlistService.findWishlistById(id);
-        wishlistService.deleteWishlist(wishlist);
+        wishlistService.deleteWishlist(id);
         model.addAttribute("wishlists", wishlistService.getAllForUser());
-        return "redirect:/wishlists/list";
+        //TODO FIX
+        return "redirect:/wishlists/itemList";
     }
+
+    /*
+    private Wishlist getWishlistName() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+
+     */
 
 
 

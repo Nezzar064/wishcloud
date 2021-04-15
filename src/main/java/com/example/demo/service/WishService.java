@@ -5,6 +5,7 @@ import com.example.demo.models.Wish;
 import com.example.demo.models.Wishlist;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.WishRepository;
+import com.example.demo.repositories.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,18 +18,19 @@ public class WishService {
 
     private WishRepository wishRepository;
     private UserRepository userRepository;
-    private WishlistService wishlistService;
+    private WishlistRepository wishlistRepository;
 
     @Autowired
-    public WishService(WishRepository wishRepository, UserRepository userRepository, WishlistService wishlistService) {
+    public WishService(WishRepository wishRepository, UserRepository userRepository, WishlistRepository wishlistRepository) {
         this.wishRepository = wishRepository;
         this.userRepository = userRepository;
-        this.wishlistService = wishlistService;
+        this.wishlistRepository = wishlistRepository;
     }
 
     //MAKE SURE ID GOES THROUGH!
-    public Wish createWish(Wish wish, Wishlist wishlist) {
+    public Wish createWish(Wish wish, long id) {
         User user = userRepository.findById(getUserId());
+        Wishlist wishlist = wishlistRepository.findById(id);
         wish.setWishlist(wishlist);
         wish.setUser(user);
         return wishRepository.save(wish);
@@ -42,6 +44,7 @@ public class WishService {
         wishRepository.delete(wish);
     }
 
+    //maybe make this as a static bean or move it to userservice
     private long getUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentLoggedInUser = authentication.getName();

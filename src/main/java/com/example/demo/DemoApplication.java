@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @EnableJpaAuditing
-//^idk if is needed or not
+
 public class DemoApplication {
 
     public static void main(String[] args) {

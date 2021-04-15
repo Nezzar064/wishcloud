@@ -10,15 +10,20 @@
 </head>
 
 <body>
-<header id="header">
-    <div th:replace="fragments/navbar.html :: menu"></div>
-</header>
 <div class="container">
     <div class="content">
         <div class="container-row">
-            <h2 class="title is-4"><strong>Your wishlists</strong></h2>
+            <h2 class="is-size-5">
+                <strong>
+                    <span th:utext="${listUserName}"></span>
+                </strong>
+            </h2>
             <br>
             <a th:href="@{/wishlists/createWishlist}" class="button is-primary">Create Wishlist</a>
+            <br>
+            <br>
+
+            <h2 class="title is-4"><strong>Your wishlists:</strong></h2>
             <div class="columns is-mobile">
                 <div class="column">
                     <div th:switch="${wishlist}" class="container my-5">
@@ -32,17 +37,18 @@
                                         <tr>
                                             <th>Wishlist name</th>
                                             <th>View</th>
+                                            <th>Add</th>
                                             <th>Delete</th>
                                             <th>Share</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="wishlists : ${wishlist}">
-                                            <td th:text="${wishlists.wishlist_name}"></td>
+                                            <td th:text="${wishlists.wishlistName}"></td>
                                             <!-- insert wishes data here -->
-                                            <td><a th:href="@{/wishlists/{wishlist_name}(wishlist_name=${wishlists.wishlist_name})/list}"
+                                            <td><a th:href="@{/wishlists/itemList/{id}(id=${wishlists.id})}"
                                                    class="button is-primary is-small">Your wishes</a></td>
-                                            <td><a th:href="@{/wishlists/{wishlist_name}(wishlist_name=${wishlists.wishlist_name})/createWish}"
+                                            <td><a th:href="@{/wishlists/createWish/{id}(id=${wishlists.id})}"
                                                    class="button is-primary is-small">Add Wish</a></td>
                                             <td><a th:href="@{/wishlists/delete/{id}(id=${wishlists.id})}"
                                                    onclick="confirm_delete_user()" class="button is-danger is-small">Delete</a></td>

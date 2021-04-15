@@ -22,14 +22,14 @@
                             <div class="column">
                                 <label for="name" class="label"></label>
                                 <strong>
-                                    <input style="color:black" type="text" th:field="*{wishlist_name}" placeholder="Name"
+                                    <input style="color:black" type="text" th:field="*{wishlistName}" placeholder="Name"
                                            class="input is-normal" id="name"/> </strong>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="column">
                                 <button type="submit" class="button is-success">Create wishlist</button>
-                                <a href="/wishlists/list" class="button is-primary">Go back</a>
+                                <a href="/wishlists/lists" class="button is-primary">Go back</a>
                             </div>
                         </div>
                         <h2 class="title is-4"><span class="text-success" th:utext="${successMessage}"></span></h2>

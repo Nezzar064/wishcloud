@@ -55,14 +55,4 @@ public class LoginController {
         }
         return modelAndView;
     }
-
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ModelAndView userHome() {
-        ModelAndView modelAndView = new ModelAndView();
-        userService.findUserByUsernameWithRole();
-        modelAndView.addObject("homeUserName", "Greetings " + userService.findUserByUsernameWithRole().getUsername() + "/" + userService.findUserByUsernameWithRole().getName() + " " + userService.findUserByUsernameWithRole().getLastName());
-        modelAndView.setViewName("/home");
-        return modelAndView;
-    }
-
 }

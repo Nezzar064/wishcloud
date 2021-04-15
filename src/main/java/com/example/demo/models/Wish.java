@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 @Table(name = "wishes")
 public class Wish {
-
+    //TODO: ADD DTO OBJECTS PLEASE!!! NO MORE QUERY ALL THE TIME
     //ADD ERRORS LIKE USER!
 
     @Id
@@ -18,7 +18,7 @@ public class Wish {
     @JoinColumn(name = "wishlist_id")
     private Wishlist wishlist;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 

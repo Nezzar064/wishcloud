@@ -2,7 +2,6 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "wishlists")
@@ -16,7 +15,7 @@ public class Wishlist {
     private long id;
 
     @Column(name = "name")
-    private String wishlist_name;
+    private String wishlistName;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,12 +27,12 @@ public class Wishlist {
     public Wishlist() {
     }
 
-    public String getWishlist_name() {
-        return wishlist_name;
+    public String getWishlistName() {
+        return wishlistName;
     }
 
-    public void setWishlist_name(String wishlist_name) {
-        this.wishlist_name = wishlist_name;
+    public void setWishlistName(String wishlistname) {
+        this.wishlistName = wishlistname;
     }
 
     public List<Wish> getWishes() {

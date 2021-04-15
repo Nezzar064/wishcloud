@@ -10,20 +10,17 @@
 </head>
 
 <body>
-<header id="header">
-    <div th:replace="fragments/navbar.html :: menu"></div>
-</header>
 <div class="container">
     <div class="content">
         <div class="container-row">
             <h2 class="title is-4">
                 <strong>
-                    <span th:each="wishlist : ${wishlists}" th:utext="{wishlist_name}(wishlist_name=${wishlists.wishlist_name}"></span>
+                    <span th:utext="wishlistName"></span>
                 </strong>
             </h2>
             <br>
 
-            <a th:href="@{/wishlists/${wishlist_name}/createWish}" class="button is-primary">Add wish</a>
+            <a href="/wishlists/lists" class="button is-primary">Go back</a>
             <div class="columns is-mobile">
                 <div class="column">
                     <div th:switch="${wishes}" class="container my-5">

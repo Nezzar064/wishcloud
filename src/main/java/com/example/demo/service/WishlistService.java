@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.models.User;
+import com.example.demo.models.Wish;
 import com.example.demo.models.Wishlist;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.repositories.WishRepository;
 import com.example.demo.repositories.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,24 +19,16 @@ public class WishlistService {
 
     private UserRepository userRepository;
     private WishlistRepository wishlistRepository;
+    private WishRepository wishRepository;
 
     @Autowired
-    public WishlistService(UserRepository userRepository, WishlistRepository wishlistRepository) {
+    public WishlistService(UserRepository userRepository, WishlistRepository wishlistRepository, WishRepository wishRepository) {
         this.userRepository = userRepository;
         this.wishlistRepository = wishlistRepository;
+        this.wishRepository = wishRepository;
     }
 
-    public Wishlist findWishlistByName(String name) {
-        List<Wishlist> wishlists = wishlistRepository.findAll();
-        Wishlist foundWishlist = new Wishlist();
-        for (int i = 0; i < wishlists.size(); i++) {
-            if (wishlists.get(i).getWishlist_name().equals(name)) {
-                foundWishlist = wishlists.get(i);
-            }
-        }
-        return foundWishlist;
-    }
-
+    //TODO: fix loop here - wrong logic
     public List<Wishlist> getAllForUser() {
         List<Wishlist> fullList = wishlistRepository.findAll();
         List<Wishlist> usersList = new ArrayList<>();
@@ -42,14 +36,11 @@ public class WishlistService {
             if (fullList.get(i).getUser().getId() == getUserId()) {
                 usersList.add(fullList.get(i));
             }
-            else {
-                return usersList;
-            }
         }
         return usersList;
     }
 
-    public Wishlist findWishlistById (long id) {
+    public Wishlist findWishlistById(long id) {
         return wishlistRepository.findById(id);
     }
 
@@ -59,7 +50,10 @@ public class WishlistService {
         return wishlistRepository.save(wishlist);
     }
 
-    public void deleteWishlist(Wishlist wishlist) {
+    public void deleteWishlist(long id) {
+        Wishlist wishlist = wishlistRepository.findById(id);
+        Wish wish = wishRepository.findByWishlistId(id);
+        wishlist.getWishes().remove(wish);
         wishlistRepository.delete(wishlist);
     }
 

@@ -13,7 +13,7 @@
             <div class="columns is-mobile">
                 <div class="col-md-6 col-md-offset-3">
 
-                    <form action="#" th:action="@{/wishlists/{current_wishlist}/addWish}"
+                    <form action="#" th:action="@{/wishlists/addWish/{id}(id=${currentWishlist.id})}"
                           th:object="${wish}" method="post" class="form-horizontal"
                           role="form">
                         <div class="form-group">
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <div class="column">
                                 <button type="submit" class="button is-success">Add wish</button>
-                                <a href="login" class="button is-primary">Go back</a>
+                                <a th:href="@{/wishlists/itemList/{id}(id=${currentWishlist.id})}" class="button is-primary">Go back</a>
                             </div>
                         </div>
                         <h2 class="title is-4"><span class="text-success" th:utext="${successMessage}"></span></h2>
