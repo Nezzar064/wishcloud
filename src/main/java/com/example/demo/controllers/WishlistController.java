@@ -43,8 +43,6 @@ public class WishlistController {
         model.addAttribute("wishlist", wishlist);
         wishlistService.createWishlist(wishlist);
         return "redirect:/wishlists/lists";
-
-
     }
 
     @GetMapping(value = "lists")
@@ -91,7 +89,7 @@ public class WishlistController {
         model.addAttribute("successMessage", "Wish has been registered successfully!");
         model.addAttribute("wish", wish);
         wishService.createWish(wish, wishlistId);
-        return "add-wish";
+        return "redirect:/wishlists/itemList/" + wishlistId;
 
 
     }
