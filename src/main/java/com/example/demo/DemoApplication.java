@@ -14,6 +14,7 @@ public class DemoApplication {
     //TODO: Evt add noget diverse errorhåndtering og andre @ til entities
     //TODO: ADD DTO til entities!
     //TODO: FIND A WAY TO COPY LINK WHEN VIEWING WISHES
+    //HIDE PASSWORD IN APPLICATION.properties mudafukaaaa
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
