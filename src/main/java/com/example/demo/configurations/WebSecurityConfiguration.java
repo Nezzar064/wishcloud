@@ -32,6 +32,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/sharedLists/**").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/wishlists/**").hasAuthority("USER").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()

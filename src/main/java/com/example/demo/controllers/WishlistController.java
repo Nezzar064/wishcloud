@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -47,8 +48,14 @@ public class WishlistController {
     }
 
     @GetMapping(value = "lists")
-    public String showWishlists(Model model) {
+    public String showWishlists(Model model, HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String baseUrl = request.getScheme()
+                + "://" + request.getServerName()
+                + ":" + request.getServerPort()
+                + request.getContextPath()
+                + "/sharedLists/";
+        model.addAttribute("baseUrl", baseUrl);
         model.addAttribute("listUserName","Greetings " + auth.getName());
         model.addAttribute("wishlist", wishlistService.getAllForUser());
         return "list-of-wishlist";
@@ -98,18 +105,42 @@ public class WishlistController {
     }
 
     @GetMapping(value = "deleteWish/{id}")
-    public String deleteWish(@PathVariable("id") long id, Model model) {
-        Long wishlistId = wishService.findWishlistIdByWishId(id);
+    public String deleteWish(@PathVariable("id") long wishId, Model model) {
+        Long wishlistId = wishService.findWishlistIdByWishId(wishId);
         try {
-            model.addAttribute("wish", wishService.getAllWishesForWishlistId(id));
-            wishService.deleteWish(id);
+            model.addAttribute("wish", wishService.getAllWishesForWishlistId(wishId));
+            wishService.deleteWish(wishId);
             return "redirect:/wishlists/itemList/" + wishlistId;
         } catch (Exception e) {
             return "redirect:/wishlists/itemList/" + wishlistId;
         }
     }
 
-    //MAKE SHARE BUTTON, maybe just add a sharing link that refers to wishlists/share/ID??
+    /*
+    @GetMapping(value = "share/{wishlistId}")
+    public String shareWishlist(@PathVariable("wishlistId") long wishlistId, Model model) {
+        String currentOwner = wishlistService.findWishlistById(wishlistId).getUser().getName() + " " + wishlistService.findWishlistById(wishlistId).getUser().getLastName();
+        model.addAttribute("wishlistOwner", currentOwner);
+        model.addAttribute("currentWishlist", wishlistService.findWishlistById(wishlistId));
+        model.addAttribute("wishes", wishService.getAllWishesForWishlistId(wishlistId));
+        return "shared-list";
+    }
+
+    @GetMapping(value = "share/reserve/{id}")
+    public String reserveWish(@PathVariable("id") long wishId) {
+        Long wishlistId = wishService.findWishlistIdByWishId(wishId);
+        try {
+            wishService.reserveWish(wishId);
+            return "redirect:/wishlists/share/" + wishlistId;
+        }
+        catch (Exception e) {
+            return "redirect:/wishlists/share/" + wishlistId;
+        }
+    }
+
+     */
+
+    //TODO: maybe add a copy link button for wishlist sharing
 
 
 }

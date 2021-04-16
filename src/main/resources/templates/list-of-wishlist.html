@@ -20,6 +20,7 @@
             </h2>
             <br>
             <a th:href="@{/wishlists/createWishlist}" class="button is-primary">Create Wishlist</a>
+            <a th:href="@{/logout}" class="button is-danger">Log out</a>
             <br>
             <br>
 
@@ -51,7 +52,7 @@
                                                    class="button is-primary is-small">Add Wish</a></td>
                                             <td><a th:href="@{/wishlists/delete/{id}(id=${wishlists.id})}"
                                                    onclick="confirm_delete_wishlist()" class="button is-danger is-small">Delete</a></td>
-                                            <td th:text="'localhost:8080/wishlist/share/'${id}(id=${wishlists.id})"></td>
+                                            <td th:text="${baseUrl} + ${wishlists.id}"></td>
                                         </tr>
                                         </tbody>
                                     </table>

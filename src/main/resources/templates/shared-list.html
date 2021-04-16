@@ -12,14 +12,15 @@
 <div class="container">
     <div class="content">
         <div class="container-row">
+            <a th:href="@{/login}" class="button is-primary">Login/Register</a>
             <h2 class="title is-4">
                 <strong>
-                    <span th:utext="wishlistName"></span>
+                    <span th:utext="'Wishlist: ' + ${currentWishlist.wishlistName}"></span>
+                    <br>
+                    <br>
+                    <span th:utext="'Made by: ' + ${wishlistOwner}"></span>
                 </strong>
             </h2>
-            <br>
-
-            <a href="/wishlists/lists" class="button is-primary">Go back</a>
             <div class="columns is-mobile">
                 <div class="column">
                     <div th:switch="${wishes}" class="container my-5">
@@ -31,18 +32,21 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
+                                            <th>Name</th>
                                             <th>Link</th>
-                                            <th>Price</th>
-                                            <th>Delete</th>
+                                            <th>Price(DKK)</th>
+                                            <th>Reserved?</th>
+                                            <th>Reserve Wish</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="wish : ${wishes}">
+                                            <td th:text="${wish.itemName}"></td>
                                             <td th:text="${wish.link}"></td>
                                             <td th:text="${wish.price}"></td>
-                                            <!-- insert wishes data here -->
-                                            <td><a th:href="@{/wishlists/deleteWish/{id}(id=${wish.id})}"
-                                                   onclick="confirm_delete_user()" class="button is-danger is-small">Delete</a></td>
+                                            <td th:text="${wish.reserved}"></td>
+                                            <td th:hidden="${wish.reserved}"><a th:href="@{/sharedLists/reserve/{id}(id=${wish.id})}"
+                                                   onclick="confirm_reserve_wish()" class="button is-primary is-small">Reserve</a></td>
                                             <!-- https://stackoverflow.com/questions/61045504/thymeleaf-how-to-hide-element-based-on-boolean-parametr for reservewish
                                             add a confirm reserve as well-->
                                         </tr>
@@ -64,8 +68,8 @@
 </footer>
 </body>
 <script type="text/javascript">
-    function confirm_delete_user() {
-        return confirm("Delete wishlist?")
+    function confirm_reserve_wish() {
+        return confirm("Reserve wish?")
     }
 </script>
 </html>

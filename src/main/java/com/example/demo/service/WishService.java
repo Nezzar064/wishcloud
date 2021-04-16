@@ -23,7 +23,6 @@ public class WishService {
         this.wishlistRepository = wishlistRepository;
     }
 
-    //MAKE SURE ID GOES THROUGH!
     public Wish createWish(Wish wish, long id) {
         Wishlist wishlist = wishlistRepository.findById(id);
         wish.setWishlist(wishlist);
@@ -43,7 +42,6 @@ public class WishService {
         Wish wish = wishRepository.findById(id);
         wishRepository.delete(wish);
     }
-
 
     public Wish reserveWish(long id) {
         Wish wish = wishRepository.findById(id);
