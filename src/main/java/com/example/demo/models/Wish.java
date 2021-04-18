@@ -1,13 +1,10 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "wishes")
 public class Wish {
-    //TODO: ADD DTO OBJECTS PLEASE!!! NO MORE QUERY ALL THE TIME. For help see StudentAdminWDB
-    //ADD ERRORS LIKE USER!
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

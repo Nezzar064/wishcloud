@@ -7,8 +7,6 @@ import java.util.List;
 @Table(name = "wishlists")
 public class Wishlist {
 
-    //ADD ERRORS LIKE USER!
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "wishlist_id")

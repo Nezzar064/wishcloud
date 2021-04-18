@@ -3,8 +3,6 @@ package com.example.demo.controllers;
 import com.example.demo.models.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +14,12 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){

@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.models.User;
 import com.example.demo.models.Wish;
 import com.example.demo.models.Wishlist;
 import com.example.demo.repositories.WishRepository;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WishService {

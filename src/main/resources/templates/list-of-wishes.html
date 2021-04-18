@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:insert="fragments/head :: head">
-    <title>Students</title>
+    <title>Wishlist</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap_4.1.3.css}"
           th:integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           th:crossorigin="anonymous"/>
@@ -43,9 +43,6 @@
                                         <tr th:each="wish : ${wishes}">
                                             <td th:text="${wish.itemName}"></td>
                                             <td th:text="${wish.link}"></td>
-                                            <!--
-                                            <td><button class="button is-primary is-small" th:onclick="copy()">Copy link</button></td>
-                                            -->
                                             <td th:text="${wish.price}"></td>
                                             <td th:text="${wish.reserved}"></td>
                                             <td><a th:href="@{/wishlists/deleteWish/{id}(id=${wish.id})}"

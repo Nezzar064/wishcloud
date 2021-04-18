@@ -44,17 +44,18 @@ public class WishlistController {
         wishlistService.createWishlist(wishlist);
         return "redirect:/wishlists/lists";
     }
-
+    //TODO: Find out why DB is called 3x on user.
     @GetMapping(value = "lists")
     public String showWishlists(Model model, HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
         String baseUrl = request.getScheme()
                 + "://" + request.getServerName()
                 + ":" + request.getServerPort()
                 + request.getContextPath()
                 + "/sharedLists/";
         model.addAttribute("baseUrl", baseUrl);
-        model.addAttribute("listUserName","Greetings " + auth.getName());
+        model.addAttribute("listUserName","Greetings " + username);
         model.addAttribute("wishlist", wishlistService.getAllForUser());
         return "list-of-wishlist";
     }
@@ -90,8 +91,6 @@ public class WishlistController {
         model.addAttribute("wish", wish);
         wishService.createWish(wish, wishlistId);
         return "redirect:/wishlists/itemList/" + wishlistId;
-
-
     }
 
     @GetMapping(value = "itemList/{wishlistId}")

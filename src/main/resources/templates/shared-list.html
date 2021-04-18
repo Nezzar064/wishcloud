@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:insert="fragments/head :: head">
-    <title>Students</title>
+    <title>Shared List</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap_4.1.3.css}"
           th:integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           th:crossorigin="anonymous"/>
@@ -47,8 +47,6 @@
                                             <td th:text="${wish.reserved}"></td>
                                             <td th:hidden="${wish.reserved}"><a th:href="@{/sharedLists/reserve/{id}(id=${wish.id})}"
                                                    onclick="confirm_reserve_wish()" class="button is-primary is-small">Reserve</a></td>
-                                            <!-- https://stackoverflow.com/questions/61045504/thymeleaf-how-to-hide-element-based-on-boolean-parametr for reservewish
-                                            add a confirm reserve as well-->
                                         </tr>
                                         </tbody>
                                     </table>

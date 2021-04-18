@@ -2,7 +2,6 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "roles")
 public class Role {
