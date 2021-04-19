@@ -44,7 +44,7 @@ public class WishlistController {
         wishlistService.createWishlist(wishlist);
         return "redirect:/wishlists/lists";
     }
-    //TODO: Find out why DB is called 3x on user. - happens on wishlists call
+
     @GetMapping(value = "lists")
     public String showWishlists(Model model, HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -112,32 +112,4 @@ public class WishlistController {
             return "redirect:/wishlists/itemList/" + wishlistId;
         }
     }
-
-    /*
-    @GetMapping(value = "share/{wishlistId}")
-    public String shareWishlist(@PathVariable("wishlistId") long wishlistId, Model model) {
-        String currentOwner = wishlistService.findWishlistById(wishlistId).getUser().getName() + " " + wishlistService.findWishlistById(wishlistId).getUser().getLastName();
-        model.addAttribute("wishlistOwner", currentOwner);
-        model.addAttribute("currentWishlist", wishlistService.findWishlistById(wishlistId));
-        model.addAttribute("wishes", wishService.getAllWishesForWishlistId(wishlistId));
-        return "shared-list";
-    }
-
-    @GetMapping(value = "share/reserve/{id}")
-    public String reserveWish(@PathVariable("id") long wishId) {
-        Long wishlistId = wishService.findWishlistIdByWishId(wishId);
-        try {
-            wishService.reserveWish(wishId);
-            return "redirect:/wishlists/share/" + wishlistId;
-        }
-        catch (Exception e) {
-            return "redirect:/wishlists/share/" + wishlistId;
-        }
-    }
-
-     */
-
-    //TODO: maybe add a copy link button for wishlist sharing
-
-
 }
