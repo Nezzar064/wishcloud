@@ -4,9 +4,11 @@ import com.example.demo.models.Wish;
 import com.example.demo.models.Wishlist;
 import com.example.demo.repositories.WishRepository;
 import com.example.demo.repositories.WishlistRepository;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Cacheable;
 import java.util.List;
 
 @Service
@@ -28,10 +30,12 @@ public class WishService {
         return wishRepository.save(wish);
     }
 
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public Long findWishlistIdByWishId(long id) {
         return wishRepository.findById(id).getWishlist().getId();
     }
 
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Wish> getAllWishesForWishlistId(long wishlistId) {
         return wishRepository.findByWishlistId(wishlistId);
     }

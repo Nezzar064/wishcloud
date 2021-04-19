@@ -6,6 +6,7 @@ import com.example.demo.models.Wishlist;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.WishRepository;
 import com.example.demo.repositories.WishlistRepository;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,7 @@ public class WishlistService {
         this.wishlistRepository = wishlistRepository;
         this.wishRepository = wishRepository;
     }
+
 
     public List<Wishlist> getAllForUser() {
         List<Wishlist> fullList = wishlistRepository.findAll();
@@ -55,6 +57,7 @@ public class WishlistService {
         wishlist.getWishes().remove(wish);
         wishlistRepository.delete(wishlist);
     }
+
 
     private long getUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

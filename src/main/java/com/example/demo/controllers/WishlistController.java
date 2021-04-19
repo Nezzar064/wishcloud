@@ -44,7 +44,7 @@ public class WishlistController {
         wishlistService.createWishlist(wishlist);
         return "redirect:/wishlists/lists";
     }
-    //TODO: Find out why DB is called 3x on user.
+    //TODO: Find out why DB is called 3x on user. - happens on wishlists call
     @GetMapping(value = "lists")
     public String showWishlists(Model model, HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -1,13 +1,18 @@
 package com.example.demo.models;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "wishes")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cacheable
 public class Wish {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "wish_id_seq", sequenceName = "wish_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wish_id_seq")
     @Column(name = "wish_id")
     private long id;
 
