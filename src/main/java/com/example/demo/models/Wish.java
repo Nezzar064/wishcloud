@@ -1,6 +1,9 @@
 package com.example.demo.models;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @Entity
@@ -15,17 +18,21 @@ public class Wish implements Serializable {
     @Column(name = "wish_id")
     private long id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name = "wishlist_id")
     private Wishlist wishlist;
 
     @Column(name = "item_name")
+    @NotEmpty(message = "*Please provide the name of the item!")
     private String itemName;
 
     @Column(name = "link")
+    @NotEmpty(message = "*Please provide a link to the item!")
     private String link;
 
     @Column(name = "price")
+    @Range(min = -2147483648, max = 2147483647, message= "*'Price' must be a number between -2147483648 and 2147483647 Example: 9346")
+    @NotEmpty
     private String price;
 
     @Column(name = "reserved")

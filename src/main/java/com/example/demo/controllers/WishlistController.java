@@ -84,6 +84,7 @@ public class WishlistController {
     @RequestMapping(value = "addWish/{wishlistId}", method = {RequestMethod.GET, RequestMethod.POST})
     public String createNewWish(@Valid Wish wish, BindingResult bindingResult, @PathVariable(value = "wishlistId") long wishlistId, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("currentWishlist", wishlistService.findWishlistById(wishlistId));
             return "add-wish";
         }
         model.addAttribute("currentWishlist", wishlistService.findWishlistById(wishlistId));

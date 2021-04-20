@@ -18,7 +18,10 @@
                           role="form">
                         <div class="form-group">
                             <div class="column">
-                                <label for="nameOfItem" ></label>
+                                <strong>
+                                    <label for="nameOfItem" th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"
+                                           class="validation-message"></label>
+                                </strong>
                                 <input type="text" th:field="*{itemName}"
                                        placeholder="Name" class="input is-primary is-normal" id="nameOfItem"
                                 style="box-shadow: 0 2px 4px 0 rgba(0,0,0,.2); border-color: black;"/>
@@ -26,16 +29,20 @@
                         </div>
                         <div class="form-group">
                             <div class="column">
-                                <label for="link"
-                                       class="label"></label>
                                 <strong>
+                                <label for="link" th:if="${#fields.hasErrors('link')}" th:errors="*{link}"
+                                       class="validation-message"></label>
+                                </strong>
                                     <input style="color:black" type="text" th:field="*{link}" placeholder="Link"
-                                           class="input is-normal" id="link"/> </strong>
+                                           class="input is-normal" id="link"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="column">
-                                <label for="priceOfItem" ></label>
+                                <strong>
+                                <label for="priceOfItem" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                                       class="validation-message"></label>
+                                </strong>
                                 <input type="text" th:field="*{price}"
                                        placeholder="Price in DKK" class="input is-primary is-normal" id="priceOfItem"
                                        style="box-shadow: 0 2px 4px 0 rgba(0,0,0,.2); border-color: black;"/>

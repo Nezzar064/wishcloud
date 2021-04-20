@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class Wishlist implements Serializable {
     private long id;
 
     @Column(name = "name")
+    @NotEmpty(message = "*Please provide a wishlist name")
     private String wishlistName;
 
     @ManyToOne

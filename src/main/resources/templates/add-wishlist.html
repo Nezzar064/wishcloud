@@ -17,10 +17,10 @@
                           role="form">
                         <div class="form-group">
                             <div class="column">
-                                <label for="name" class="label"></label>
-                                <strong>
+                                <label for="name" th:if="${#fields.hasErrors('wishlistName')}" th:errors="*{wishlistName}"
+                                       class="validation-message"></label>
                                     <input style="color:black" type="text" th:field="*{wishlistName}" placeholder="Name"
-                                           class="input is-normal" id="name"/> </strong>
+                                           class="input is-normal" id="name"/>
                             </div>
                         </div>
                         <div class="form-group">
