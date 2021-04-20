@@ -3,12 +3,13 @@ package com.example.demo.models;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "roles")
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Role {
+public class Role implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @SequenceGenerator(name = "role_id_seq", sequenceName = "role_id_seq")

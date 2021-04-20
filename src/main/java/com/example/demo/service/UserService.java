@@ -7,6 +7,8 @@ import com.example.demo.repositories.RoleRepository;
 import com.example.demo.repositories.UserRepository;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,10 +36,12 @@ public class UserService {
         return findUserByUsername(auth.getName());
     }
 
+    @Cacheable(cacheNames = "userCache")
     public User findUserByUsername(String userName){
         return userRepository.findByUsername(userName);
     }
 
+    @CachePut(cacheNames = "userCache")
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);

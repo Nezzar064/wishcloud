@@ -6,9 +6,11 @@ import com.example.demo.repositories.WishRepository;
 import com.example.demo.repositories.WishlistRepository;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Cacheable;
 import java.util.List;
 
 @Service
@@ -30,21 +32,23 @@ public class WishService {
         return wishRepository.save(wish);
     }
 
-    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cacheable(cacheNames = "wishCache")
     public Long findWishlistIdByWishId(long id) {
         return wishRepository.findById(id).getWishlist().getId();
     }
 
-    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cacheable(cacheNames = "wishCache")
     public List<Wish> getAllWishesForWishlistId(long wishlistId) {
         return wishRepository.findByWishlistId(wishlistId);
     }
 
+    @CacheEvict(cacheNames = "wishCache")
     public void deleteWish(long id) {
         Wish wish = wishRepository.findById(id);
         wishRepository.delete(wish);
     }
 
+    @CachePut(value = "wishCache")
     public Wish reserveWish(long id) {
         Wish wish = wishRepository.findById(id);
         wish.setReserved(true);

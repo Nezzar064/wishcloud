@@ -3,13 +3,16 @@ package com.example.demo.models;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "wishlists")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Cacheable
-public class Wishlist {
+public class Wishlist implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @SequenceGenerator(name = "wishlist_id_seq", sequenceName = "wishlist_id_seq")
