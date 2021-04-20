@@ -32,23 +32,19 @@ public class WishService {
         return wishRepository.save(wish);
     }
 
-    @Cacheable(cacheNames = "wishCache")
     public Long findWishlistIdByWishId(long id) {
         return wishRepository.findById(id).getWishlist().getId();
     }
 
-    @Cacheable(cacheNames = "wishCache")
     public List<Wish> getAllWishesForWishlistId(long wishlistId) {
         return wishRepository.findByWishlistId(wishlistId);
     }
 
-    @CacheEvict(cacheNames = "wishCache")
     public void deleteWish(long id) {
         Wish wish = wishRepository.findById(id);
         wishRepository.delete(wish);
     }
 
-    @CachePut(value = "wishCache")
     public Wish reserveWish(long id) {
         Wish wish = wishRepository.findById(id);
         wish.setReserved(true);

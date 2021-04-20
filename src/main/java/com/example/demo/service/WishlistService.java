@@ -6,11 +6,7 @@ import com.example.demo.models.Wishlist;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.WishRepository;
 import com.example.demo.repositories.WishlistRepository;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -32,7 +28,6 @@ public class WishlistService {
         this.wishRepository = wishRepository;
     }
 
-    @Cacheable(cacheNames = "wishlistCache")
     public List<Wishlist> getAllForUser() {
         List<Wishlist> fullList = wishlistRepository.findAll();
         List<Wishlist> usersList = new ArrayList<>();
@@ -44,19 +39,16 @@ public class WishlistService {
         return usersList;
     }
 
-    @Cacheable(cacheNames = "wishlistCache")
     public Wishlist findWishlistById(long id) {
         return wishlistRepository.findById(id);
     }
 
-    @CachePut(cacheNames = "wishlistCache")
     public Wishlist createWishlist(Wishlist wishlist) {
         User user = userRepository.findById(getUserId());
         wishlist.setUser(user);
         return wishlistRepository.save(wishlist);
     }
 
-    @CacheEvict(value = "wishlistCache")
     public void deleteWishlist(long id) {
         Wishlist wishlist = wishlistRepository.findById(id);
         Wish wish = wishRepository.findSingleByWishlistId(id);

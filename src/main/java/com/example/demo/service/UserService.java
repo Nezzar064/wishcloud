@@ -36,12 +36,10 @@ public class UserService {
         return findUserByUsername(auth.getName());
     }
 
-    @Cacheable(cacheNames = "userCache")
     public User findUserByUsername(String userName){
         return userRepository.findByUsername(userName);
     }
 
-    @CachePut(cacheNames = "userCache")
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
