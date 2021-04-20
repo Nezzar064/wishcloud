@@ -4,11 +4,7 @@ import com.example.demo.models.Wish;
 import com.example.demo.models.Wishlist;
 import com.example.demo.repositories.WishRepository;
 import com.example.demo.repositories.WishlistRepository;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

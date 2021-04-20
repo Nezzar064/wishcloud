@@ -1,14 +1,10 @@
 package com.example.demo.models;
 
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "wishes")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Cacheable
 public class Wish implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -19,7 +15,7 @@ public class Wish implements Serializable {
     @Column(name = "wish_id")
     private long id;
 
-    @ManyToOne(cascade=CascadeType.MERGE)
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "wishlist_id")
     private Wishlist wishlist;
 

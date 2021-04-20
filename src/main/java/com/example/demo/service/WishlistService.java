@@ -51,8 +51,16 @@ public class WishlistService {
 
     public void deleteWishlist(long id) {
         Wishlist wishlist = wishlistRepository.findById(id);
-        Wish wish = wishRepository.findSingleByWishlistId(id);
-        wishlist.getWishes().remove(wish);
+        boolean wishExists = true;
+        while(wishExists) {
+            if (wishRepository.findAll().contains(id)) {
+                Wish wish = wishRepository.findById(id);
+                wishlist.getWishes().remove(wish);
+            }
+            else {
+                wishExists = false;
+            }
+        }
         wishlistRepository.delete(wishlist);
     }
 
