@@ -32,7 +32,7 @@ public class Wish implements Serializable {
 
     @Column(name = "price")
     @Range(min = -2147483648, max = 2147483647, message= "*'Price' must be a number between -2147483648 and 2147483647 Example: 9346")
-    @NotEmpty
+    @NotEmpty(message = "*Please provide a price!")
     private String price;
 
     @Column(name = "reserved")
